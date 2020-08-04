@@ -18,6 +18,7 @@ namespace AspNetApiControllers
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
 
             services.AddSingleton<IPersonService, PersonService>();
         }
@@ -32,9 +33,15 @@ namespace AspNetApiControllers
 
             app.UseRouting();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                   pattern: "{controller=Home}/{action=index}/{id?}");              
             });
         }
     }
